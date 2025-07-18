@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zenith | Админ-панель</title>
+    <link rel="stylesheet" href="css/admin.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Боковая панель -->
+        <div class="admin-sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fas fa-infinity"></i>
+                </div>
+                <h1>Zenith <span class="admin-badge">Admin</span></h1>
+            </div>
+
+            <div class="admin-profile">
+                <div class="user-avatar">
+                    <div class="avatar-placeholder">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                </div>
+                <div class="user-info">
+                    <span id="admin-username">Загрузка...</span>
+                    <small id="admin-email">#admin</small>
+                </div>
+            </div>
+
+            <nav class="admin-nav">
+                <div class="nav-item active" data-tab="dashboard">
+                    <i class="fas fa-chart-line"></i>
+                    <span>Статистика</span>
+                </div>
+                <div class="nav-item" data-tab="users">
+                    <i class="fas fa-users"></i>
+                    <span>Пользователи</span>
+                </div>
+                <div class="nav-item" data-tab="servers">
+                    <i class="fas fa-server"></i>
+                    <span>Серверы</span>
+                </div>
+                <div class="nav-item" data-tab="badges">
+                    <i class="fas fa-shield-alt"></i>
+                    <span>Бейджи</span>
+                </div>
+                <div class="nav-item" data-tab="moderation">
+                    <i class="fas fa-gavel"></i>
+                    <span>Модерация</span>
+                </div>
+                <div class="nav-divider"></div>
+                <div class="nav-item" data-tab="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Настройки</span>
+                </div>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Выйти</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Основной контент -->
+        <div class="admin-content">
+            <div class="content-header">
+                <h2 id="admin-page-title">Статистика</h2>
+                <div class="header-actions">
+                    <button class="btn-icon" title="Обновить" id="refresh-btn">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button class="btn-notification" title="Уведомления" id="notifications-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge" id="notification-count">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Контент для Dashboard -->
+            <div class="tab-content active" id="dashboard-tab">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon users">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-users">0</h3>
+                            <p>Пользователи</p>
+                            <small id="users-change" class="positive">+0%</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon servers">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-servers">0</h3>
+                            <p>Серверы</p>
+                            <small id="servers-change" class="positive">+0%</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon messages">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="total-messages">0</h3>
+                            <p>Сообщения</p>
+                            <small id="messages-change" class="positive">+0%</small>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon activity">
+                            <i class="fas fa-bolt"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 id="active-users">0</h3>
+                            <p>Активные</p>
+                            <small id="activity-change" class="positive">+0%</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="charts-container">
+                    <div class="chart-card">
+                        <h3>Регистрации пользователей</h3>
+                        <canvas id="registrations-chart"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3>Активность</h3>
+                        <canvas id="activity-chart"></canvas>
+                    </div>
+                </div>
+
+                <div class="recent-activity">
+                    <h3>Последние действия</h3>
+                    <div class="activity-list" id="recent-activity-list">
+                        <!-- Активность будет загружена здесь -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Контент для Users -->
+            <div class="tab-content" id="users-tab">
+                <div class="admin-toolbar">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="users-search" placeholder="Поиск пользователей...">
+                    </div>
+                    <div class="toolbar-actions">
+                        <select id="users-filter">
+                            <option value="all">Все пользователи</option>
+                            <option value="active">Активные</option>
+                            <option value="banned">Заблокированные</option>
+                            <option value="staff">Администраторы</option>
+                        </select>
+                        <button class="btn-primary" id="add-user-btn">
+                            <i class="fas fa-plus"></i> Добавить
+                        </button>
+                    </div>
+                </div>
+
+                <div class="admin-table-container">
+                    <table class="admin-table" id="users-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Пользователь</th>
+                                <th>Email</th>
+                                <th>Статус</th>
+                                <th>Дата регистрации</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Пользователи будут загружены здесь -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="users-pagination">
+                    <!-- Пагинация будет загружена здесь -->
+                </div>
+            </div>
+
+            <!-- Контент для Servers -->
+            <div class="tab-content" id="servers-tab">
+                <div class="admin-toolbar">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="servers-search" placeholder="Поиск серверов...">
+                    </div>
+                    <div class="toolbar-actions">
+                        <select id="servers-filter">
+                            <option value="all">Все серверы</option>
+                            <option value="public">Публичные</option>
+                            <option value="private">Приватные</option>
+                            <option value="large">Крупные (50+ участников)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="admin-table-container">
+                    <table class="admin-table" id="servers-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Название</th>
+                                <th>Владелец</th>
+                                <th>Участников</th>
+                                <th>Статус</th>
+                                <th>Дата создания</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="servers-table-body">
+                            <!-- Серверы будут загружены здесь -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pagination" id="servers-pagination">
+                    <!-- Пагинация будет загружена здесь -->
+                </div>
+            </div>
+
+            <!-- Контент для Badges -->
+            <div class="tab-content" id="badges-tab">
+                <div class="admin-toolbar">
+                    <div class="search-bar">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="badges-search" placeholder="Поиск бейджей...">
+                    </div>
+                    <div class="toolbar-actions">
+                        <button class="btn-primary" id="add-badge-btn">
+                            <i class="fas fa-plus"></i> Создать бейдж
+                        </button>
+                    </div>
+                </div>
+
+                <div class="badges-grid" id="badges-container">
+                    <!-- Бейджи будут загружены здесь -->
+                </div>
+
+                <div class="pagination" id="badges-pagination">
+                    <!-- Пагинация будет загружена здесь -->
+                </div>
+            </div>
+
+            <!-- Контент для Moderation -->
+            <div class="tab-content" id="moderation-tab">
+                <div class="moderation-tabs">
+                    <button class="mod-tab-btn active" data-mod-tab="reports">Жалобы</button>
+                    <button class="mod-tab-btn" data-mod-tab="bans">Баны</button>
+                    <button class="mod-tab-btn" data-mod-tab="warnings">Предупреждения</button>
+                </div>
+
+                <div class="mod-tab-content active" id="reports-tab">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Тип</th>
+                                    <th>Цель</th>
+                                    <th>Отправитель</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reports-table-body">
+                                <!-- Жалобы будут загружены здесь -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mod-tab-content" id="bans-tab">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Пользователь</th>
+                                    <th>Модератор</th>
+                                    <th>Причина</th>
+                                    <th>Дата</th>
+                                    <th>Истекает</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="bans-table-body">
+                                <!-- Баны будут загружены здесь -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="mod-tab-content" id="warnings-tab">
+                    <div class="admin-table-container">
+                        <table class="admin-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Пользователь</th>
+                                    <th>Модератор</th>
+                                    <th>Предупреждение</th>
+                                    <th>Дата</th>
+                                    <th>Статус</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody id="warnings-table-body">
+                                <!-- Предупреждения будут загружены здесь -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Контент для Settings -->
+            <div class="tab-content" id="settings-tab">
+                <div class="settings-grid">
+                    <div class="settings-card">
+                        <h3><i class="fas fa-shield-alt"></i> Безопасность</h3>
+                        <div class="setting-item">
+                            <label>Двухфакторная аутентификация</label>
+                            <label class="switch">
+                                <input type="checkbox" id="2fa-toggle">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>Уведомления о входе</label>
+                            <label class="switch">
+                                <input type="checkbox" id="login-notifications-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-bell"></i> Уведомления</h3>
+                        <div class="setting-item">
+                            <label>Email уведомления</label>
+                            <label class="switch">
+                                <input type="checkbox" id="email-notifications-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="setting-item">
+                            <label>Push уведомления</label>
+                            <label class="switch">
+                                <input type="checkbox" id="push-notifications-toggle" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-card">
+                        <h3><i class="fas fa-paint-brush"></i> Внешний вид</h3>
+                        <div class="setting-item">
+                            <label>Тема</label>
+                            <select id="theme-select">
+                                <option value="dark">Тёмная</option>
+                                <option value="light">Светлая</option>
+                                <option value="system">Системная</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="settings-card danger">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Опасная зона</h3>
+                        <button class="btn-danger" id="clear-cache-btn">
+                            <i class="fas fa-trash"></i> Очистить кеш
+                        </button>
+                        <button class="btn-danger" id="create-backup-btn">
+                            <i class="fas fa-save"></i> Создать резервную копию
+                        </button>
+                        <button class="btn-danger" id="maintenance-btn">
+                            <i class="fas fa-tools"></i> Режим обслуживания
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальные окна -->
+    <div class="modal" id="user-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 id="user-modal-title">Редактирование пользователя</h2>
+            
+            <div class="form-group">
+                <label for="edit-username">Никнейм</label>
+                <input type="text" id="edit-username" placeholder="Введите никнейм">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-email">Email</label>
+                <input type="email" id="edit-email" placeholder="Введите email">
+            </div>
+            
+            <div class="form-group">
+                <label for="edit-password">Пароль (оставьте пустым, чтобы не менять)</label>
+                <input type="password" id="edit-password" placeholder="Новый пароль">
+            </div>
+            <div class="form-group">
+                <label>Бейджи пользователя</label>
+                <div class="user-badges-container" id="user-badges-container">
+                    <!-- Бейджи будут загружены здесь -->
+                </div>
+                <button class="btn-secondary small" id="add-badge-to-user" style="margin-top: 10px;">
+                    <i class="fas fa-plus"></i> Добавить бейдж
+                </button>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="edit-status">Статус</label>
+                    <select id="edit-status">
+                        <option value="active">Активный</option>
+                        <option value="banned">Заблокирован</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="edit-role">Роль</label>
+                    <select id="edit-role">
+                        <option value="0">Пользователь</option>
+                        <option value="1">Администратор</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Отмена</button>
+                <button class="btn-primary" id="save-user-btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="badge-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <button class="modal-close"><i class="fas fa-times"></i></button>
+            <h2 id="badge-modal-title">Создание бейджа</h2>
+            
+            <div class="form-group">
+                <label for="badge-name">Название</label>
+                <input type="text" id="badge-name" placeholder="Введите название бейджа">
+            </div>
+            
+            <div class="form-group">
+                <label for="badge-description">Описание</label>
+                <textarea id="badge-description" placeholder="Введите описание бейджа"></textarea>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="badge-icon">Иконка (Font Awesome)</label>
+                    <input type="text" id="badge-icon" placeholder="fa-shield-alt">
+                </div>
+                
+                <div class="form-group">
+                    <label for="badge-color">Цвет</label>
+                    <input type="color" id="badge-color" value="#6C5CE7">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="checkbox-container">
+                    <input type="checkbox" id="badge-staff-only">
+                    <span class="checkmark"></span>
+                    Только для администраторов
+                </label>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Отмена</button>
+                <button class="btn-primary" id="save-badge-btn">Сохранить</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="confirm-modal">
+        <div class="modal-overlay"></div>
+        <div class="modal-content small">
+            <h2 id="confirm-title">Подтверждение действия</h2>
+            <p id="confirm-message">Вы уверены, что хотите выполнить это действие?</p>
+            
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Отмена</button>
+                <button class="btn-danger" id="confirm-action-btn">Подтвердить</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

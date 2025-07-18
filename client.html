@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Elysm | Клиент</title>
+    <link rel="stylesheet" href="css/client.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Боковая панель -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <span>Elysm</span>
+                </div>
+                <button class="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li class="active" data-tab="home">
+                        <a href="#">
+                            <i class="fas fa-home"></i>
+                            <span>Главная</span>
+                        </a>
+                    </li>
+                    <li data-tab="messages">
+                        <a href="#">
+                            <i class="fas fa-envelope"></i>
+                            <span>Сообщения</span>
+                        </a>
+                    </li>
+                    <li data-tab="communities">
+                        <a href="#">
+                            <i class="fas fa-users"></i>
+                            <span>Сообщества</span>
+                        </a>
+                    </li>
+                    <li data-tab="friends">
+                        <a href="#">
+                            <i class="fas fa-user-friends"></i>
+                            <span>Друзья</span>
+                        </a>
+                    </li>
+                    <li data-tab="shop">
+                        <a href="#">
+                            <i class="fas fa-store"></i>
+                            <span>Магазин</span>
+                        </a>
+                    </li>
+                    <li data-tab="settings">
+                        <a href="#">
+                            <i class="fas fa-cog"></i>
+                            <span>Настройки</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <img src="assets/default-avatar.png" alt="Аватар">
+                    </div>
+                    <div class="user-info">
+                        <span class="username">Гость</span>
+                        <span class="status">offline</span>
+                    </div>
+                    <button class="logout-btn">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Основное содержимое -->
+        <main class="main-content">
+            <div class="content-header">
+                <h1 class="page-title">Главная</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Поиск...">
+                    <button><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            
+            <div class="tab-content active" id="home-tab">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h2>Добро пожаловать в Elysm!</h2>
+                    <p>Здесь пока ничего нет. Начните с добавления друзей или вступления в сообщества.</p>
+                    <button class="btn primary-btn">Начать знакомство</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="messages-tab">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-comment-alt"></i>
+                    </div>
+                    <h2>Нет сообщений</h2>
+                    <p>У вас пока нет сообщений. Начните общение с друзьями!</p>
+                    <button class="btn primary-btn">Найти друзей</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="communities-tab">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h2>Вы не состоите в сообществах</h2>
+                    <p>Присоединяйтесь к сообществам по вашим интересам или создайте свое.</p>
+                    <div class="button-group">
+                        <button class="btn primary-btn">Найти сообщества</button>
+                        <button class="btn secondary-btn">Создать сообщество</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="friends-tab">
+                <div class="empty-state">
+                    <div class="empty-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h2>У вас пока нет друзей</h2>
+                    <p>Добавьте друзей, чтобы общаться и видеть их активность.</p>
+                    <button class="btn primary-btn">Найти друзей</button>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="shop-tab">
+                <div class="shop-header">
+                    <h2>Магазин Elysm</h2>
+                    <p>Покупайте стикеры, скины и другие товары</p>
+                </div>
+                
+                <div class="shop-categories">
+                    <button class="category-btn active">Все товары</button>
+                    <button class="category-btn">Стикеры</button>
+                    <button class="category-btn">Скины</button>
+                    <button class="category-btn">Значки</button>
+                </div>
+                
+                <div class="shop-items">
+                    <div class="empty-state">
+                        <div class="empty-icon">
+                            <i class="fas fa-store"></i>
+                        </div>
+                        <h2>Магазин пуст</h2>
+                        <p>Здесь скоро появятся товары. Возвращайтесь позже!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tab-content" id="settings-tab">
+                <div class="settings-section">
+                    <h2>Настройки аккаунта</h2>
+                    
+                    <div class="settings-card">
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <i class="fas fa-user"></i>
+                                <div>
+                                    <h3>Профиль</h3>
+                                    <p>Измените информацию о себе</p>
+                                </div>
+                            </div>
+                            <button class="settings-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <i class="fas fa-bell"></i>
+                                <div>
+                                    <h3>Уведомления</h3>
+                                    <p>Настройте получение уведомлений</p>
+                                </div>
+                            </div>
+                            <button class="settings-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <i class="fas fa-lock"></i>
+                                <div>
+                                    <h3>Безопасность</h3>
+                                    <p>Измените пароль и настройки безопасности</p>
+                                </div>
+                            </div>
+                            <button class="settings-btn">
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="settings-item">
+                            <div class="settings-info">
+                                <i class="fas fa-moon"></i>
+                                <div>
+                                    <h3>Тема</h3>
+                                    <p>Светлая или темная тема</p>
+                                </div>
+                            </div>
+                            <div class="theme-switch">
+                                <span>Светлая</span>
+                                <label class="switch">
+                                    <input type="checkbox" checked>
+                                    <span class="slider round"></span>
+                                </label>
+                                <span>Темная</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/client.js"></script>
+</body>
+</html>
