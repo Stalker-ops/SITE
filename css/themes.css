@@ -1,0 +1,231 @@
+/* Светлая тема */
+[data-theme="light"] {
+    --text-normal: #2E3338;
+    --text-muted: #747F8D;
+    --background-primary: #FFFFFF;
+    --background-secondary: #F2F3F5;
+    --background-tertiary: #E3E5E8;
+    --background-accent: #D4D7DC;
+    --background-floating: #FFFFFF;
+}
+
+/* Темная тема */
+[data-theme="dark"] {
+    --text-normal: #DCDDDE;
+    --text-muted: #A3A6AA;
+    --background-primary: #36393F;
+    --background-secondary: #2F3136;
+    --background-tertiary: #202225;
+    --background-accent: #4F545C;
+    --background-floating: #18191C;
+}
+
+/* Стили для страницы авторизации */
+.auth-container {
+    max-width: 480px;
+    margin: 100px auto;
+    padding: 40px;
+    background-color: var(--background-secondary);
+    border-radius: 8px;
+    box-shadow: var(--elevation-high);
+    animation: fadeIn 0.5s ease;
+}
+
+.auth-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.auth-tabs {
+    display: flex;
+    margin-bottom: 30px;
+    border-bottom: 1px solid var(--background-accent);
+}
+
+.auth-tab {
+    padding: 12px 20px;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    font-weight: 600;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.auth-tab.active {
+    color: var(--text-normal);
+}
+
+.auth-tab.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--primary);
+    border-radius: 3px 3px 0 0;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+    animation: fadeIn 0.5s ease;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--text-muted);
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--background-tertiary);
+    border: 1px solid var(--background-accent);
+    border-radius: 4px;
+    color: var(--text-normal);
+    font-size: 16px;
+    transition: border-color 0.2s;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: var(--primary);
+}
+
+.forgot-password {
+    display: block;
+    margin-top: 8px;
+    font-size: 14px;
+    color: var(--primary);
+    text-align: right;
+}
+
+.btn-auth {
+    width: 100%;
+    padding: 14px;
+    background-color: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    margin-bottom: 20px;
+}
+
+.btn-auth:hover {
+    background-color: var(--primary-hover);
+}
+
+.auth-divider {
+    position: relative;
+    margin: 20px 0;
+    text-align: center;
+}
+
+.auth-divider span {
+    display: inline-block;
+    padding: 0 10px;
+    background-color: var(--background-secondary);
+    color: var(--text-muted);
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+}
+
+.auth-divider::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background-color: var(--background-accent);
+    z-index: 0;
+}
+
+.social-auth {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.btn-social {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border-radius: 4px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.btn-social.google {
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+.btn-social.google:hover {
+    background-color: #E6E6E6;
+}
+
+.btn-social.apple {
+    background-color: #000000;
+    color: #FFFFFF;
+}
+
+.btn-social.apple:hover {
+    background-color: #333333;
+}
+
+.btn-social.facebook {
+    background-color: #1877F2;
+    color: #FFFFFF;
+}
+
+.btn-social.facebook:hover {
+    background-color: #166FE5;
+}
+
+.form-note {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 8px;
+}
+
+.auth-footer {
+    margin-top: 30px;
+    font-size: 14px;
+    color: var(--text-muted);
+    text-align: center;
+}
+
+.auth-footer a {
+    color: var(--primary);
+}
+
+@media (max-width: 600px) {
+    .auth-container {
+        margin: 50px 20px;
+        padding: 30px 20px;
+    }
+}
